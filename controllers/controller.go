@@ -29,6 +29,13 @@ func CreateKnight(c *gin.Context) {
 			"error": err.Error()})
 		return
 	}
+
+	if err := models.ValidateKnight(&knight); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+
 	database.DB.Create(&knight)
 	c.JSON(http.StatusOK, knight)
 
@@ -68,6 +75,12 @@ func EditKnight(c *gin.Context) {
 		return
 	}
 
+	if err := models.ValidateKnight(&knight); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+
 	database.DB.Model(&knight).UpdateColumns(knight)
 	c.JSON(http.StatusOK, knight)
 
@@ -85,4 +98,17 @@ func SearchByName(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, knight)
+}
+
+func ShowIndex(c *gin.Context) {
+	var knights []models.Knight
+	database.DB.Find(&knights)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"mensage": "Welcome",
+	})
+}
+
+func RouteNotFound(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "404.html", nil)
+
 }
