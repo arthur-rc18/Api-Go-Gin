@@ -6,6 +6,7 @@ import (
 	"github.com/arthur-rc18/Api-Go-Gin/database"
 	"github.com/arthur-rc18/Api-Go-Gin/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/swaggo/swag/example/celler/httputil"
 )
 
 func ShowEveryone(c *gin.Context) {
@@ -21,6 +22,16 @@ func Greeting(c *gin.Context) {
 	})
 }
 
+// CreateKnight godoc
+// @Summary      Create a new knight
+// @Description  Route to create a new knight
+// @Tags         knights
+// @Accept       json
+// @Produce      json
+// @Param        knight   body      models.Knight  true  "Knight model"
+// @Success      200  {object}	int
+// @Failure      400  {object}  httputil.HTTPError
+// @Router       /knights [post]
 func CreateKnight(c *gin.Context) {
 
 	var knight models.Knight
@@ -41,6 +52,16 @@ func CreateKnight(c *gin.Context) {
 
 }
 
+// SearchKnightByID godoc
+// @Summary      Search a knight by the ID
+// @Description  Route to find a knight using the ID
+// @Tags         knights
+// @Accept       json
+// @Produce      json
+// @Param        knight   body      models.Knight  true  "Knight model"
+// @Success      200  {object}  int
+// @Failure      400  {object}  httputil.HTTPError
+// @Router       /knights/:id [get]
 func SearchKnightByID(c *gin.Context) {
 	var knight models.Knight
 
