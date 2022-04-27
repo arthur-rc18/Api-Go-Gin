@@ -1,0 +1,94 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Knight:
+    properties:
+      age:
+        type: string
+      characteristic:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        description: Specifying the field's characteristics using validate
+        type: string
+      updatedAt:
+        type: string
+      weapon:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /knights:
+    post:
+      consumes:
+      - application/json
+      description: Route to create a new knight
+      parameters:
+      - description: Knight model
+        in: body
+        name: knight
+        required: true
+        schema:
+          $ref: '#/definitions/models.Knight'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Create a new knight
+      tags:
+      - knights
+  /knights/:id:
+    get:
+      consumes:
+      - application/json
+      description: Route to find a knight using the ID
+      parameters:
+      - description: Knight model
+        in: body
+        name: knight
+        required: true
+        schema:
+          $ref: '#/definitions/models.Knight'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Search a knight by the ID
+      tags:
+      - knights
+swagger: "2.0"
