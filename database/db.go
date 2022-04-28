@@ -21,5 +21,6 @@ func DbConnection() {
 	if err != nil {
 		log.Panic("Connection to database failed")
 	}
+
 	DB.AutoMigrate(&models.Knight{})
 }
